@@ -25,8 +25,8 @@ export default function IndexRouter() {
           <Route index element={<Home />} />
           <Route path="home" element={<Home />} />
           <Route path="user-manage/list" element={<UserManageList />}></Route>
-          <Route path="right-manage/role/list" element={<RoleList />}></Route>
-          <Route path="right-manage/right/list" element={<RightList />}></Route>
+          <Route path="auth-manage/role/list" element={<RoleList />}></Route>
+          <Route path="auth-manage/auth/list" element={<RightList />}></Route>
           <Route path="*" element={<NoPermission />} />
         </Route>
       </Routes>
