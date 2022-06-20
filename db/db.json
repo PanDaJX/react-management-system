@@ -1,0 +1,228 @@
+{
+  "routes": [
+    { "id": 1, "path": "/login", "element": "" },
+    {
+      "id": 2,
+      "path": "/",
+      "children": [
+        { "path": "home", "element": "" },
+        { "path": "user-manage/list", "element": "" },
+        { "path": "auth-manage/role/list", "element": "" },
+        { "path": "auth-manage/auth/list", "element": "" },
+        { "path": "*", "element": "" }
+      ]
+    }
+  ],
+  "menus": [
+    {
+      "id": 1,
+      "title": "首页",
+      "grade": 1,
+      "key": "/home",
+      "pagepermisson": 1,
+      "icon": "BarsOutlined"
+    },
+    {
+      "id": 2,
+      "title": "用户管理",
+      "grade": 1,
+      "key": "/user-manage",
+      "pagepermisson": 1,
+     
+    },
+    {
+      "id": 3,
+      "title": "权限管理",
+      "grade": 1,
+      "key": "/auth-manage",
+      "pagepermisson": 1,
+     
+    },
+    {
+      "id": 4,
+      "title": "新闻管理",
+      "grade": 1,
+      "key": "/news-manage",
+      "pagepermisson": 1,
+     
+    },
+    {
+      "id": 5,
+      "title": "审核管理",
+      "grade": 1,
+      "key": "/audit-manage",
+      "pagepermisson": 1,
+     
+    },
+    {
+      "id": 6,
+      "title": "发布管理",
+      "grade": 1,
+      "key": "/publish-manage",
+      "pagepermisson": 1,
+     
+    }
+  ],
+  "menuChildren": [
+    {
+      "id": 3,
+      "title": "添加用户",
+      "menuId": 2,
+      "key": "/user-manage/add",
+      "grade": 2
+    },
+    {
+      "id": 4,
+      "title": "删除用户",
+      "menuId": 2,
+      "key": "/user-manage/delete",
+      "grade": 2
+    },
+    {
+      "id": 5,
+      "title": "修改用户",
+      "menuId": 2,
+      "key": "/user-manage/update",
+      "grade": 2
+    },
+    {
+      "id": 6,
+      "title": "用户列表",
+      "menuId": 2,
+      "key": "/user-manage/list",
+      "pagepermisson": 1,
+      "grade": 2
+    },
+    {
+      "id": 8,
+      "title": "角色列表",
+      "menuId": 3,
+      "key": "/auth-manage/role/list",
+      "pagepermisson": 1,
+      "grade": 2
+    },
+    {
+      "id": 9,
+      "title": "权限列表",
+      "menuId": 3,
+      "key": "/auth-manage/auth/list",
+      "pagepermisson": 1,
+      "grade": 2
+    },
+    {
+      "id": 10,
+      "title": "修改角色",
+      "menuId": 3,
+      "key": "/auth-manage/role/update",
+      "grade": 2
+    },
+    {
+      "id": 11,
+      "title": "删除角色",
+      "menuId": 3,
+      "key": "/auth-manage/role/delete",
+      "grade": 2
+    },
+    {
+      "id": 12,
+      "title": "修改权限",
+      "menuId": 3,
+      "key": "/auth-manage/right/update",
+      "grade": 2
+    },
+    {
+      "id": 13,
+      "title": "删除权限",
+      "menuId": 3,
+      "key": "/auth-manage/right/delete",
+      "grade": 2
+    },
+    {
+      "id": 15,
+      "title": "新闻列表",
+      "menuId": 4,
+      "key": "/news-manage/list",
+      "grade": 2
+    },
+    {
+      "id": 16,
+      "title": "撰写新闻",
+      "menuId": 4,
+      "key": "/news-manage/add",
+      "grade": 2,
+      "pagepermisson": 1
+    },
+    {
+      "id": 17,
+      "title": "新闻更新",
+      "menuId": 4,
+      "key": "/news-manage/update/:id",
+      "grade": 2,
+      "routepermisson": 1
+    },
+    {
+      "id": 18,
+      "title": "新闻预览",
+      "menuId": 4,
+      "key": "/news-manage/preview/:id",
+      "grade": 2,
+      "routepermisson": 1
+    },
+    {
+      "id": 19,
+      "title": "草稿箱",
+      "menuId": 4,
+      "key": "/news-manage/draft",
+      "pagepermisson": 1,
+      "grade": 2
+    },
+    {
+      "id": 20,
+      "title": "新闻分类",
+      "menuId": 4,
+      "key": "/news-manage/category",
+      "pagepermisson": 1,
+      "grade": 2
+    },
+    {
+      "id": 22,
+      "title": "审核新闻",
+      "menuId": 5,
+      "key": "/audit-manage/audit",
+      "pagepermisson": 1,
+      "grade": 2
+    },
+    {
+      "id": 23,
+      "title": "审核列表",
+      "menuId": 5,
+      "key": "/audit-manage/list",
+      "pagepermisson": 1,
+      "grade": 2
+    },
+    {
+      "id": 25,
+      "title": "待发布",
+      "menuId": 6,
+      "key": "/publish-manage/unpublished",
+      "pagepermisson": 1,
+      "grade": 2
+    },
+    {
+      "id": 26,
+      "title": "已发布",
+      "menuId": 6,
+      "key": "/publish-manage/published",
+      "pagepermisson": 1,
+      "grade": 2
+    },
+    {
+      "id": 27,
+      "title": "已下线",
+      "menuId": 6,
+      "key": "/publish-manage/sunset",
+      "pagepermisson": 1,
+      "grade": 2
+    }
+  ]
+}

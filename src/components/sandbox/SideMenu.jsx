@@ -1,59 +1,68 @@
+/*
+ * @author: 林俊贤
+ * @Date: 2022-06-17 15:26:02
+ * @LastEditors: 林俊贤
+ * @LastEditTime: 2022-06-20 17:59:39
+ * @Description:
+ */
 import React from "react";
 
 import { Layout, Menu } from "antd";
 import { useNavigate } from "react-router-dom";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Icon, { BarsOutlined } from "@ant-design/icons";
 export default function SideMenu(props) {
   const { collapsed } = props;
   const { Sider } = Layout;
   const navigate = useNavigate();
-  function getItem(label, key, icon, children, type) {
+  const [menuList, setMenuList] = useState([]);
+
+  function getItem(key, label, children, icon, type) {
     return {
       key,
-      icon,
-      children,
+      children: children?.length
+        ? children
+            .filter((child) => child.pagepermisson === 1)
+            .map((child) => {
+              return { key: child.key, label: child.title };
+            })
+        : null,
       label,
+      icon,
+      // icon: icon ? <Icon component={icon} /> : null,
       type,
     };
   }
-  const items = [
-    getItem("首页", "/home"),
-    getItem("用户管理", "/user-manage", null, [
-      getItem("用户列表", "/user-manage/list"),
-    ]),
-    getItem("权限管理", "/auth-manage", null, [
-      getItem("角色列表", "/auth-manage/role/list"),
-      getItem("权限列表", "/auth-manage/auth/list"),
-    ]),
-    // getItem("新闻管理", "/home", [
-    //   getItem("角色列表", "g1"),
-    //   getItem("权限列表", "g1"),
-    // ]),
-    // getItem("审核管理", "/home", [
-    //   getItem("角色列表", "g1"),
-    //   getItem("权限列表", "g1"),
-    // ]),
-    // getItem("发布管理", "/home", [
-    //   getItem("角色列表", "g1"),
-    //   getItem("权限列表", "g1"),
-    // ]),
-  ];
+  useEffect(() => {
+    axios.get("http://localhost:1111/menus?_embed=menuChildren").then((res) => {
+      const { data } = res;
+      let list = [];
+      data.forEach((item) => {
+        const { key, menuChildren, title, icon } = item;
+        list.push(getItem(key, title, menuChildren, icon));
+      });
+      setMenuList(list);
+    });
+  }, []);
+
   const handleClick = ({ item, key, keyPath, domEvent }) => {
     navigate(key);
   };
+
   return (
     <Sider trigger={null} collapsible collapsed={collapsed}>
       <div
         className="logo"
         style={{ textAlign: "center", color: "#fff", fontSize: "24px" }}
       >
-        新闻发布管理系统
+        xx发布管理系统
       </div>
       <Menu
         theme="dark"
         mode="inline"
         defaultSelectedKeys={["1"]}
-        items={items}
+        items={menuList}
         onClick={handleClick}
       />
     </Sider>
