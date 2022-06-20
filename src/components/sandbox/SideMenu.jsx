@@ -2,20 +2,23 @@
  * @author: 林俊贤
  * @Date: 2022-06-17 15:26:02
  * @LastEditors: 林俊贤
- * @LastEditTime: 2022-06-20 17:59:39
+ * @LastEditTime: 2022-06-20 22:17:06
  * @Description:
  */
-import React from "react";
+import styles from "@views/sandbox/index.module.scss";
+
+import React, { useEffect, useState } from "react";
 
 import { Layout, Menu } from "antd";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Icon, { BarsOutlined } from "@ant-design/icons";
 export default function SideMenu(props) {
   const { collapsed } = props;
   const { Sider } = Layout;
   const navigate = useNavigate();
+  const location = useLocation();
+  const selectKeys = [location.pathname];
+  const openKeys = ["/" + location.pathname.split("/")[1]];
   const [menuList, setMenuList] = useState([]);
 
   function getItem(key, label, children, icon, type) {
@@ -30,7 +33,6 @@ export default function SideMenu(props) {
         : null,
       label,
       icon,
-      // icon: icon ? <Icon component={icon} /> : null,
       type,
     };
   }
@@ -52,19 +54,24 @@ export default function SideMenu(props) {
 
   return (
     <Sider trigger={null} collapsible collapsed={collapsed}>
-      <div
-        className="logo"
-        style={{ textAlign: "center", color: "#fff", fontSize: "24px" }}
-      >
-        xx发布管理系统
+      <div className={styles.SideMenuWrap}>
+        <div
+          className="logo"
+          style={{ textAlign: "center", color: "#fff", fontSize: "24px" }}
+        >
+          xx发布管理系统
+        </div>
+        <div className={styles.MenuList}>
+          <Menu
+            theme="dark"
+            mode="inline"
+            selectedKeys={selectKeys}
+            openKeys={openKeys}
+            items={menuList}
+            onClick={handleClick}
+          />
+        </div>
       </div>
-      <Menu
-        theme="dark"
-        mode="inline"
-        defaultSelectedKeys={["1"]}
-        items={menuList}
-        onClick={handleClick}
-      />
     </Sider>
   );
 }

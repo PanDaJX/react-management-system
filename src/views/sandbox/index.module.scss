@@ -24,8 +24,16 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 16px;
-    .Avatar{
+    .Avatar {
       cursor: pointer;
+    }
+  }
+  .SideMenuWrap {
+    display: flex;
+    flex-direction: column;
+    .MenuList {
+      flex: 1;
+      overflow-y: auto;
     }
   }
   .SiteLayout .SiteLayoutBackground {
