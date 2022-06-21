@@ -1,15 +1,34 @@
 {
   "routes": [
-    { "id": 1, "path": "/login", "element": "" },
+    {
+      "id": 1,
+      "path": "/login",
+      "element": ""
+    },
     {
       "id": 2,
       "path": "/",
       "children": [
-        { "path": "home", "element": "" },
-        { "path": "user-manage/list", "element": "" },
-        { "path": "auth-manage/role/list", "element": "" },
-        { "path": "auth-manage/auth/list", "element": "" },
-        { "path": "*", "element": "" }
+        {
+          "path": "home",
+          "element": ""
+        },
+        {
+          "path": "user-manage/list",
+          "element": ""
+        },
+        {
+          "path": "auth-manage/role/list",
+          "element": ""
+        },
+        {
+          "path": "auth-manage/auth/list",
+          "element": ""
+        },
+        {
+          "path": "*",
+          "element": ""
+        }
       ]
     }
   ],

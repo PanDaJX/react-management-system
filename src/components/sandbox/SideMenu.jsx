@@ -2,7 +2,7 @@
  * @author: 林俊贤
  * @Date: 2022-06-17 15:26:02
  * @LastEditors: 林俊贤
- * @LastEditTime: 2022-06-20 22:17:06
+ * @LastEditTime: 2022-06-21 10:28:05
  * @Description:
  */
 import styles from "@views/sandbox/index.module.scss";
@@ -65,8 +65,10 @@ export default function SideMenu(props) {
           <Menu
             theme="dark"
             mode="inline"
-            selectedKeys={selectKeys}
-            openKeys={openKeys}
+            defaultSelectedKeys={selectKeys}
+            defaultOpenKeys={openKeys}
+            // selectedKeys={selectKeys}
+            // openKeys={openKeys}
             items={menuList}
             onClick={handleClick}
           />
