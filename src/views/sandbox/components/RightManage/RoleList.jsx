@@ -12,7 +12,7 @@ const { confirm } = Modal;
 export default function RoleList() {
   const [dataSource, setDataSource] = useState([]);
   const getList = () => {
-    axios.get("http://localhost:1111/menus?_embed=menuChildren").then((res) => {
+    axios.get("http://localhost:1113/roles").then((res) => {
       const { data } = res;
       data.forEach((item) => {
         item.menuChildren = item?.menuChildren?.length
@@ -42,11 +42,7 @@ export default function RoleList() {
   };
 
   const handleDelete = (item) => {
-    const api =
-      item.grade === 1
-        ? "http://localhost:1111/menus"
-        : "http://localhost:1111/menuChildren";
-    axios.delete(`${api}/${item.id}`).then(() => {
+    axios.delete(`http://localhost:1113/roles/${item.id}`).then(() => {
       getList();
     });
   };
@@ -77,8 +73,7 @@ export default function RoleList() {
           key="id"
           render={(id) => <b>{id}</b>}
         />
-        <Column title="权限名称" dataIndex="title" key="title" />
-        <Column title="权限路径" key="key" dataIndex="key" />
+        <Column title="角色名称" dataIndex="roleName" key="roleName" />
 
         <Column
           title="操作"
@@ -88,7 +83,6 @@ export default function RoleList() {
               <Tooltip title="权限配置">
                 <Button
                   type="primary"
-                  danger
                   shape="circle"
                   icon={<UnorderedListOutlined />}
                   onClick={() => {
