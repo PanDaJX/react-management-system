@@ -1,8 +1,17 @@
+<!--
+ * @author: 林俊贤
+ * @Date: 2022-06-17 15:21:27
+ * @LastEditors: 林俊贤
+ * @LastEditTime : do not edit
+ * @Description: 
+-->
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
+
+### `json-server --watch .\db.json --port 1111`
 
 In the project directory, you can run:
 
