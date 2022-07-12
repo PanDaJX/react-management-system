@@ -37,7 +37,7 @@ export default function SideMenu(props) {
     };
   }
   useEffect(() => {
-    axios.get("http://localhost:1111/menus?_embed=menuChildren").then((res) => {
+    axios.get("http://localhost:1113/menus?_embed=menuChildren").then((res) => {
       const { data } = res;
       let list = [];
       data.forEach((item) => {
