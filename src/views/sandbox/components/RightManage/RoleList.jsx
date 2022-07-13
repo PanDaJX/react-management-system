@@ -46,16 +46,44 @@ export default function RoleList() {
       getList();
     });
   };
-
+  const [currentRole, setCurrentRole] = useState([]);
   const handleSelectRole = (item) => {
+    setCurrentRole(item.rights);
+    console.log("handleSelectRole", item);
     setIsModalVisible(true);
-    setCurrentRole(item);
   };
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [currentRole, setCurrentRole] = useState({});
+  const [roleList, setRoleList] = useState([]);
+
+  function getItem(key, label, children, icon, type) {
+    return {
+      key,
+      children: children?.length
+        ? children
+            .filter((child) => child.pagepermisson === 1)
+            .map((child) => {
+              return { key: child.key, label: child.title };
+            })
+        : null,
+      label,
+      icon,
+      type,
+    };
+  }
+  useEffect(() => {
+    axios.get("http://localhost:1113/menus?_embed=menuChildren").then((res) => {
+      const { data } = res;
+      let list = [];
+      data.forEach((item) => {
+        const { key, menuChildren, title, icon } = item;
+        list.push(getItem(key, title, menuChildren, icon));
+      });
+      setRoleList(list);
+    });
+  }, []);
   const handleOk = () => {
-    setIsModalVisible(false);
+    handleCancel();
   };
   const handleCancel = () => {
     setIsModalVisible(false);
@@ -85,9 +113,7 @@ export default function RoleList() {
                   type="primary"
                   shape="circle"
                   icon={<UnorderedListOutlined />}
-                  onClick={() => {
-                    handleSelectRole(item);
-                  }}
+                  onClick={() => handleSelectRole(item)}
                 />
               </Tooltip>
               <Tooltip title="删除">
@@ -111,6 +137,10 @@ export default function RoleList() {
       >
         <Tree
           checkable
+          treeData={roleList}
+          fieldNames={{ title: "label" }}
+          autoExpandParent={true}
+          checkedKeys={currentRole}
           // onExpand={onExpand}
           // expandedKeys={expandedKeys}
           // autoExpandParent={autoExpandParent}
@@ -118,7 +148,6 @@ export default function RoleList() {
           // checkedKeys={checkedKeys}
           // onSelect={onSelect}
           // selectedKeys={selectedKeys}
-          treeData={currentRole}
         />
       </Modal>
     </div>
