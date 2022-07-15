@@ -11,16 +11,13 @@ const { confirm } = Modal;
 
 export default function RoleList() {
   const [dataSource, setDataSource] = useState([]);
-  const getList = () => {
-    axios.get("http://localhost:1113/roles").then((res) => {
-      const { data } = res;
-      data.forEach((item) => {
-        item.menuChildren = item?.menuChildren?.length
-          ? item.menuChildren
-          : null;
-      });
-      setDataSource(data);
+  const getList = async () => {
+    const res = await axios.get("http://localhost:1113/roles");
+    const { data } = res;
+    data.forEach((item) => {
+      item.menuChildren = item?.menuChildren?.length ? item.menuChildren : null;
     });
+    setDataSource(data);
   };
   useEffect(() => {
     getList();
@@ -47,8 +44,10 @@ export default function RoleList() {
     });
   };
   const [currentRole, setCurrentRole] = useState([]);
+  const [currenPlayer, setCurrentPlayer] = useState({});
   const handleSelectRole = (item) => {
     setCurrentRole(item.rights);
+    setCurrentPlayer(item);
     console.log("handleSelectRole", item);
     setIsModalVisible(true);
   };
@@ -82,11 +81,18 @@ export default function RoleList() {
       setRoleList(list);
     });
   }, []);
-  const handleOk = () => {
+  const handleOk = async () => {
+    await axios.patch(`http://localhost:1113/roles/${currenPlayer.id}`, {
+      rights: currentRole.checked,
+    });
+    getList();
     handleCancel();
   };
   const handleCancel = () => {
     setIsModalVisible(false);
+  };
+  const handleCheck = (checkedKeys) => {
+    setCurrentRole(checkedKeys);
   };
   return (
     <div>
@@ -139,15 +145,10 @@ export default function RoleList() {
           checkable
           treeData={roleList}
           fieldNames={{ title: "label" }}
-          autoExpandParent={true}
+          autoExpandParent
+          checkStrictly
           checkedKeys={currentRole}
-          // onExpand={onExpand}
-          // expandedKeys={expandedKeys}
-          // autoExpandParent={autoExpandParent}
-          // onCheck={onCheck}
-          // checkedKeys={checkedKeys}
-          // onSelect={onSelect}
-          // selectedKeys={selectedKeys}
+          onCheck={handleCheck}
         />
       </Modal>
     </div>

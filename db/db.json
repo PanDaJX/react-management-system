@@ -249,7 +249,7 @@
       "roleId": 1
     },
     {
-      "username": "钢蛋",
+      "username": "钢蛋123",
       "password": "123",
       "roleState": true,
       "default": false,
@@ -319,6 +319,21 @@
       "roleState": true,
       "default": false,
       "id": 10
+    },
+    {
+      "username": "123",
+      "password": "123",
+      "region": "",
+      "roleId": 1,
+      "id": 11,
+      "roleState": true
+    },
+    {
+      "username": "xxx",
+      "password": "123",
+      "region": "亚洲",
+      "roleId": 2,
+      "id": 12
     }
   ],
   "roles": [
@@ -395,9 +410,7 @@
       "roleType": 3,
       "rights": [
         "/home",
-        "/audit-manage",
         "/audit-manage/list",
-        "/publish-manage",
         "/publish-manage/unpublished",
         "/publish-manage/published",
         "/publish-manage/sunset",
@@ -408,8 +421,11 @@
         "/news-manage/preview/:id",
         "/news-manage/draft",
         "/news-manage/category",
-        "/news-manage"
-      ]
+        "/news-manage",
+        "/publish-manage",
+        "/audit-manage"
+      ],
+      "menuChildren": null
     }
   ],
   "categories": [
