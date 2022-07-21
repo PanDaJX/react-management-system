@@ -2,7 +2,7 @@
  * @author: 林俊贤
  * @Date: 2022-06-17 15:26:02
  * @LastEditors: 林俊贤
- * @LastEditTime: 2022-06-21 10:28:05
+ * @LastEditTime: 2022-07-20 16:28:15
  * @Description:
  */
 import styles from "@views/sandbox/index.module.scss";
@@ -39,10 +39,15 @@ export default function SideMenu(props) {
   useEffect(() => {
     axios.get("http://localhost:1113/menus?_embed=menuChildren").then((res) => {
       const { data } = res;
+      const {
+        role: { rights },
+      } = JSON.parse(localStorage.getItem("token"));
       let list = [];
       data.forEach((item) => {
-        const { key, menuChildren, title, icon } = item;
-        list.push(getItem(key, title, menuChildren, icon));
+        const { key, menuChildren, title, icon, pagepermisson } = item;
+        rights.includes(key) &&
+          pagepermisson &&
+          list.push(getItem(key, title, menuChildren, icon));
       });
       setMenuList(list);
     });
@@ -57,9 +62,14 @@ export default function SideMenu(props) {
       <div className={styles.SideMenuWrap}>
         <div
           className="logo"
-          style={{ textAlign: "center", color: "#fff", fontSize: "24px" }}
+          style={{
+            textAlign: "center",
+            color: "#fff",
+            fontSize: "32px",
+            padding: "0 8px",
+          }}
         >
-          xx发布管理系统
+          xx新闻发布管理系统
         </div>
         <div className={styles.MenuList}>
           <Menu

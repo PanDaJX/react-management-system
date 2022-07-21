@@ -2,7 +2,7 @@
  * @author: 林俊贤
  * @Date: 2022-06-17 15:26:02
  * @LastEditors: 林俊贤
- * @LastEditTime: 2022-07-15 16:09:37
+ * @LastEditTime: 2022-07-20 16:34:09
  * @Description:
  */
 import React, { useState, useEffect, useRef } from "react";
@@ -27,7 +27,19 @@ export default function UserManageList() {
   const [dataSource, setDataSource] = useState([]);
   const getUsersList = async () => {
     const res = await axios.get("http://localhost:1113/users");
-    setDataSource(res?.data);
+    const { username, region, roleId } = JSON.parse(
+      localStorage.getItem("token")
+    );
+    setDataSource(
+      roleId === 1
+        ? res?.data
+        : [
+            ...res?.data.filter((item) => item.username === username),
+            ...res?.data.filter(
+              (item) => item.region === region && item.roleId === 3
+            ),
+          ]
+    );
   };
 
   const [rolesList, setRolesList] = useState([]);
@@ -47,7 +59,6 @@ export default function UserManageList() {
   };
   const [filteredInfo, setFilteredInfo] = useState({});
   const handleChangeTable = (pagination, filters, sorter) => {
-    console.log("filters", filters);
     setFilteredInfo(filters);
   };
   const columns = [

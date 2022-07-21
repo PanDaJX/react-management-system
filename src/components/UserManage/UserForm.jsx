@@ -2,7 +2,7 @@
  * @author: 林俊贤
  * @Date: 2022-07-15 14:08:31
  * @LastEditors: 林俊贤
- * @LastEditTime: 2022-07-15 15:58:00
+ * @LastEditTime: 2022-07-21 10:18:01
  * @Description:
  */
 import React, { forwardRef, useState, useEffect } from "react";
@@ -11,8 +11,7 @@ const { Option } = Select;
 const UserForm = forwardRef((props, ref) => {
   const { regionsList, rolesList, currentUser } = props;
   useEffect(() => {
-    console.log("roleId", currentUser);
-    setDisabled(currentUser.roleId == 1);
+    setDisabled(currentUser.roleId === 1);
   }, [currentUser]);
 
   const [disabled, setDisabled] = useState(false);
@@ -20,6 +19,25 @@ const UserForm = forwardRef((props, ref) => {
     setDisabled(value === 1);
     value === 1 && ref.current.setFieldsValue({ region: "" });
   };
+  const { region, roleId } = JSON.parse(localStorage.getItem("token"));
+  const handleRegionDisabled = (item) => {
+    if (roleId === 1) return false;
+    if (currentUser?.id) {
+      return true;
+    } else {
+      return item.value !== region;
+    }
+  };
+
+  const handleRoleDisabled = (item) => {
+    if (roleId === 1) return false;
+    if (currentUser?.id) {
+      return true;
+    } else {
+      return item.id !== 3;
+    }
+  };
+
   return (
     <Form ref={ref} name="userForm" layout="vertical">
       <Form.Item
@@ -58,7 +76,11 @@ const UserForm = forwardRef((props, ref) => {
       >
         <Select disabled={disabled}>
           {regionsList.map((item) => (
-            <Option key={item.value} value={item.value}>
+            <Option
+              key={item.value}
+              value={item.value}
+              disabled={handleRegionDisabled(item)}
+            >
               {item.title}
             </Option>
           ))}
@@ -76,7 +98,11 @@ const UserForm = forwardRef((props, ref) => {
       >
         <Select onChange={handleChange}>
           {rolesList.map((item) => (
-            <Option key={item.id} value={item.id}>
+            <Option
+              key={item.id}
+              value={item.id}
+              disabled={handleRoleDisabled(item)}
+            >
               {item.roleName}
             </Option>
           ))}

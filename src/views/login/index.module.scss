@@ -1,0 +1,23 @@
+.LoginWrap {
+  background: rgb(46, 45, 43);
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  .LoginForm {
+    width: 500px;
+    height: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgb(88, 87, 83);
+    padding: 20px;
+    border-radius: 4px;
+    overflow: hidden;
+    z-index: 10;
+    .FormTitle {
+      text-align: center;
+      color: #fff;
+    }
+  }
+}
