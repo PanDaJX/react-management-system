@@ -2,7 +2,7 @@
  * @author: 林俊贤
  * @Date: 2022-06-17 15:26:02
  * @LastEditors: 林俊贤
- * @LastEditTime: 2022-07-20 16:28:15
+ * @LastEditTime: 2022-07-25 14:22:26
  * @Description:
  */
 import styles from "@views/sandbox/index.module.scss";
@@ -37,14 +37,16 @@ export default function SideMenu(props) {
     };
   }
   useEffect(() => {
-    axios.get("http://localhost:1113/menus?_embed=menuChildren").then((res) => {
+    axios.get("/menus?_embed=menuChildren").then((res) => {
       const { data } = res;
       const {
         role: { rights },
       } = JSON.parse(localStorage.getItem("token"));
+
       let list = [];
       data.forEach((item) => {
         const { key, menuChildren, title, icon, pagepermisson } = item;
+
         rights.includes(key) &&
           pagepermisson &&
           list.push(getItem(key, title, menuChildren, icon));

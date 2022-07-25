@@ -2,7 +2,7 @@
  * @author: 林俊贤
  * @Date: 2022-06-17 15:26:02
  * @LastEditors: 林俊贤
- * @LastEditTime: 2022-07-21 15:03:42
+ * @LastEditTime: 2022-07-25 15:22:46
  * @Description:
  */
 import React, { useMemo, useEffect, useState } from "react";
@@ -65,18 +65,29 @@ export default function IndexRouter() {
   useEffect(() => {
     const fetchData = async () => {
       const [{ data: menus }, { data: menuChildren }] = await Promise.all([
-        axios.get("http://localhost:1113/menus"),
-        axios.get("http://localhost:1113/menuChildren"),
+        axios.get("/menus"),
+        axios.get("/menuChildren"),
       ]);
       setOriginRouter([...menus, ...menuChildren]);
     };
     fetchData();
   }, []);
 
-  const localRouter = useMemo(
-    () => originRouter.filter((item) => !!RouterMap[item.key]),
-    [originRouter, RouterMap]
-  );
+  const localRouter = useMemo(() => {
+    return originRouter.filter((item) => !!RouterMap[item.key]);
+  }, [originRouter, RouterMap]);
+
+  const checkRoute = (item) => {
+    return RouterMap[item.key] && item.pagepermisson;
+  };
+
+  const {
+    role: { rights },
+  } = JSON.parse(localStorage.getItem("token"));
+
+  const checkUserPermission = (item) => {
+    return rights.includes(item.key);
+  };
 
   return (
     <HashRouter>
@@ -84,14 +95,19 @@ export default function IndexRouter() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<AuthCheck />}>
           <Route index element={<Home />} />
-          {localRouter.map((route) => (
-            <Route
-              path={route.key}
-              key={route.key}
-              element={RouterMap[route.key]}
-            />
-          ))}
-    
+          {localRouter.map((route) => {
+            if (checkRoute(route) && checkUserPermission(route)) {
+              return (
+                <Route
+                  path={route.key}
+                  key={route.key}
+                  element={RouterMap[route.key]}
+                />
+              );
+            }
+            return null;
+          })}
+
           <Route path="*" element={<NoPermission />} />
         </Route>
       </Routes>

@@ -26,7 +26,7 @@ export default function UserManageList() {
 
   const [dataSource, setDataSource] = useState([]);
   const getUsersList = async () => {
-    const res = await axios.get("http://localhost:1113/users");
+    const res = await axios.get("/users");
     const { username, region, roleId } = JSON.parse(
       localStorage.getItem("token")
     );
@@ -44,7 +44,7 @@ export default function UserManageList() {
 
   const [rolesList, setRolesList] = useState([]);
   const getRolesList = async () => {
-    const res = await axios.get("http://localhost:1113/roles");
+    const res = await axios.get("/roles");
     const { data } = res;
     data.forEach((item) => {
       item.menuChildren = item?.menuChildren?.length ? item.menuChildren : null;
@@ -54,7 +54,7 @@ export default function UserManageList() {
 
   const [regionsList, setRegionsList] = useState([]);
   const getRegionsList = async () => {
-    const res = await axios.get("http://localhost:1113/regions");
+    const res = await axios.get("/regions");
     setRegionsList(res?.data);
   };
   const [filteredInfo, setFilteredInfo] = useState({});
@@ -130,7 +130,7 @@ export default function UserManageList() {
   ];
 
   const handleChangeRoleState = async (item) => {
-    const res = await axios.patch(`http://localhost:1113/users/${item.id}`, {
+    const res = await axios.patch(`/users/${item.id}`, {
       ...item,
       roleState: !item.roleState,
     });
@@ -153,7 +153,7 @@ export default function UserManageList() {
     });
   };
   const handleDelete = (item) => {
-    axios.delete(`http://localhost:1113/users/${item.id}`).then(() => {
+    axios.delete(`/users/${item.id}`).then(() => {
       getUsersList();
     });
   };
@@ -177,12 +177,12 @@ export default function UserManageList() {
     const value = await userForm.current.validateFields();
     if (!value) return;
     if (!currentUser?.id) {
-      const res = await axios.post(`http://localhost:1113/users`, value);
+      const res = await axios.post(`/users`, value);
       const { data } = res;
       setDataSource([...dataSource, data]);
     } else {
       const res = await axios.patch(
-        `http://localhost:1113/users/${currentUser?.id}`,
+        `/users/${currentUser?.id}`,
         value
       );
       const { data } = res;

@@ -29,7 +29,7 @@ const { confirm } = Modal;
 export default function RightList() {
   const [dataSource, setDataSource] = useState([]);
   const getList = () => {
-    axios.get("http://localhost:1113/menus?_embed=menuChildren").then((res) => {
+    axios.get("/menus?_embed=menuChildren").then((res) => {
       const { data } = res;
       data.forEach((item) => {
         item.menuChildren = item?.menuChildren?.length
@@ -63,8 +63,8 @@ export default function RightList() {
   const handleDelete = (item) => {
     const api =
       item.grade === 1
-        ? "http://localhost:1113/menus"
-        : "http://localhost:1113/menuChildren";
+        ? "/menus"
+        : "/menuChildren";
     axios.delete(`${api}/${item.id}`).then(() => {
       getList();
     });
@@ -75,8 +75,8 @@ export default function RightList() {
     setDataSource([...dataSource]);
     const api =
       item.grade === 1
-        ? "http://localhost:1113/menus"
-        : "http://localhost:1113/menuChildren";
+        ? "/menus"
+        : "/menuChildren";
     axios.patch(`${api}/${item.id}`, {
       pagepermisson: item.pagepermisson,
     });

@@ -12,7 +12,7 @@ const { confirm } = Modal;
 export default function RoleList() {
   const [dataSource, setDataSource] = useState([]);
   const getList = async () => {
-    const res = await axios.get("http://localhost:1113/roles");
+    const res = await axios.get("/roles");
     const { data } = res;
     data.forEach((item) => {
       item.menuChildren = item?.menuChildren?.length ? item.menuChildren : null;
@@ -23,13 +23,11 @@ export default function RoleList() {
     getList();
   }, []);
   const onClickDelete = (item) => {
-    console.log(item);
     confirm({
       title: `删除`,
       icon: <ExclamationCircleOutlined />,
       content: `是否删除${item.title}?`,
       onOk() {
-        console.log("OK");
         handleDelete(item);
       },
       onCancel() {
@@ -39,7 +37,7 @@ export default function RoleList() {
   };
 
   const handleDelete = (item) => {
-    axios.delete(`http://localhost:1113/roles/${item.id}`).then(() => {
+    axios.delete(`/roles/${item.id}`).then(() => {
       getList();
     });
   };
@@ -48,7 +46,6 @@ export default function RoleList() {
   const handleSelectRole = (item) => {
     setCurrentRole(item.rights);
     setCurrentPlayer(item);
-    console.log("handleSelectRole", item);
     setIsModalVisible(true);
   };
 
@@ -71,7 +68,7 @@ export default function RoleList() {
     };
   }
   useEffect(() => {
-    axios.get("http://localhost:1113/menus?_embed=menuChildren").then((res) => {
+    axios.get("/menus?_embed=menuChildren").then((res) => {
       const { data } = res;
       let list = [];
       data.forEach((item) => {
@@ -82,7 +79,7 @@ export default function RoleList() {
     });
   }, []);
   const handleOk = async () => {
-    await axios.patch(`http://localhost:1113/roles/${currenPlayer.id}`, {
+    await axios.patch(`/roles/${currenPlayer.id}`, {
       rights: currentRole.checked,
     });
     getList();
@@ -100,6 +97,7 @@ export default function RoleList() {
         dataSource={dataSource}
         pagination={{ pageSize: 5, total: dataSource.length }}
         childrenColumnName={"menuChildren"}
+        rowKey={(e) => e.id}
       >
         <Column
           title="ID"

@@ -2,7 +2,7 @@
  * @author: 林俊贤
  * @Date: 2022-06-17 15:26:02
  * @LastEditors: 林俊贤
- * @LastEditTime: 2022-07-19 15:53:19
+ * @LastEditTime: 2022-07-25 14:22:35
  * @Description:
  */
 import React from "react";
@@ -18,16 +18,14 @@ export default function Index() {
 
   const onFinish = async (values) => {
     fetch(
-      `http://localhost:1113/users?username=${values.username}&password=${values.password}&roleState=true&_expand=role`
+      `/users?username=${values.username}&password=${values.password}&roleState=true&_expand=role`
     )
       .then((res) => res.json())
       .then((res) => {
-        console.log("fetch", res, !res.length);
         if (!res.length) throw new Error("用户不存在");
         localStorage.setItem("token", JSON.stringify(res[0]));
         localStorage.setItem("route", JSON.stringify(res[0].role.rights));
         navigate("/home");
-        console.log("fetch1");
       })
       .catch((err) => {
         console.error(err);
