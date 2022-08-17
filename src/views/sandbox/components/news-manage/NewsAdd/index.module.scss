@@ -1,0 +1,18 @@
+.StepBtnWrap {
+  margin-top: 50px;
+  text-align: right;
+  :global(.ant-btn) {
+    margin-right: 16px;
+  }
+}
+
+.Active {
+  display: block;
+}
+.Hidden {
+  display: none;
+}
+
+.StepWrap{
+  margin-top: 50px;
+}

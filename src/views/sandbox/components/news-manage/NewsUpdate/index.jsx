@@ -2,14 +2,14 @@
  * @author: 林俊贤
  * @Date: 2022-07-21 10:46:43
  * @LastEditors: 林俊贤
- * @LastEditTime: 2022-08-16 16:23:01
+ * @LastEditTime: 2022-08-16 16:40:03
  * @Description:
  */
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./index.module.scss";
 import axios from "axios";
 import NewsEditor from "@/components/NewsManage/NewsEditor";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import {
   PageHeader,
@@ -23,10 +23,9 @@ import {
 } from "antd";
 const { Step } = Steps;
 const { Option } = Select;
-function NewsAdd() {
+function NewsUpdate() {
   const navigate = useNavigate();
-
-  const User = JSON.parse(localStorage.getItem("token"));
+  const { id } = useParams();
 
   const [step, setStep] = useState(0);
   const clickPreBtn = () => {
@@ -74,20 +73,25 @@ function NewsAdd() {
 
   const [formInfo, setFormInfo] = useState({});
   const [formContent, setFormContent] = useState("");
+  useEffect(() => {
+    const getData = async () => {
+      const res = await axios.get(
+        `news?id=${id}&_expand=category&_expand=role`
+      );
+      const { content, title, categoryId } = res.data[0];
+      newsForm.current.setFieldsValue({ title, categoryId });
+      setFormInfo({ title, categoryId });
+      setFormContent(content);
+    };
+    getData();
+  }, [id]);
 
   const handleSave = async (auditState) => {
     try {
-      await axios.post("/news", {
+      await axios.patch(`/news/${id}`, {
         ...formInfo,
         content: formContent,
-        region: User.region || "全球",
-        author: User.username,
-        roleId: User.roleId,
         auditState: auditState,
-        publishState: 0,
-        createTime: Date.now(),
-        star: 0,
-        view: 0,
       });
       notification.info({
         message: `通知`,
@@ -102,7 +106,7 @@ function NewsAdd() {
 
   return (
     <div>
-      <PageHeader title="撰写新闻" subTitle="" />
+      <PageHeader title="撰写新闻" subTitle="" onBack={() => navigate(-1)} />
       <Steps current={step}>
         <Step title="基本信息" description="新闻标题，新闻分类" />
         <Step title="新闻内容" description="新闻主题内容" />
@@ -147,6 +151,7 @@ function NewsAdd() {
 
         <div className={step === 1 ? styles.Active : styles.Hidden}>
           <NewsEditor
+            content={formContent}
             getContent={(htmlText) => {
               setFormContent(htmlText);
             }}
@@ -178,4 +183,4 @@ function NewsAdd() {
   );
 }
 
-export default NewsAdd;
+export default NewsUpdate;

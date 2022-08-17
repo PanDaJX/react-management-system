@@ -2,7 +2,7 @@
  * @author: 林俊贤
  * @Date: 2022-06-17 15:26:02
  * @LastEditors: 林俊贤
- * @LastEditTime: 2022-07-25 15:22:46
+ * @LastEditTime: 2022-08-16 16:19:38
  * @Description:
  */
 import React, { useMemo, useEffect, useState } from "react";
@@ -23,6 +23,8 @@ import UserManageList from "@views/sandbox/components/user-manage/UserList";
 import NewsAdd from "@views/sandbox/components/news-manage/NewsAdd";
 import NewsDraft from "@views/sandbox/components/news-manage/NewsDraft";
 import NewsCategory from "@views/sandbox/components/news-manage/NewsCategory";
+import NewsPreview from "@views/sandbox/components/news-manage/NewsPreview";
+import NewsUpdate from "@views/sandbox/components/news-manage/NewsUpdate";
 
 import Audit from "@views/sandbox/components/audit-manage/Audit";
 import AuditList from "@views/sandbox/components/audit-manage/AuditList";
@@ -52,6 +54,8 @@ export default function IndexRouter() {
       "/news-manage/add": <NewsAdd />,
       "/news-manage/draft": <NewsDraft />,
       "/news-manage/category": <NewsCategory />,
+      "/news-manage/preview/:id": <NewsPreview />,
+      "/news-manage/update/:id": <NewsUpdate />,
 
       "/audit-manage/audit": <Audit />,
       "/audit-manage/list": <AuditList />,
@@ -78,7 +82,7 @@ export default function IndexRouter() {
   }, [originRouter, RouterMap]);
 
   const checkRoute = (item) => {
-    return RouterMap[item.key] && item.pagepermisson;
+    return RouterMap[item.key] && (item.pagepermisson || item.routepermisson);
   };
 
   const {

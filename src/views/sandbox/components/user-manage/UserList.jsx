@@ -2,7 +2,7 @@
  * @author: 林俊贤
  * @Date: 2022-06-17 15:26:02
  * @LastEditors: 林俊贤
- * @LastEditTime: 2022-07-20 16:34:09
+ * @LastEditTime: 2022-08-11 15:37:01
  * @Description:
  */
 import React, { useState, useEffect, useRef } from "react";
@@ -74,7 +74,7 @@ export default function UserManageList() {
         }),
       ],
       filteredValue: filteredInfo.region || null,
-      onFilter: (value, record) => record.region == value,
+      onFilter: (value, record) => record.region === value,
     },
     {
       title: "角色名称",
